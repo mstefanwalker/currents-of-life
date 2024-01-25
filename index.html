@@ -1,25 +1,64 @@
 <!doctype html>
 <html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="normalize.css">
-    <script src="https://pixijs.download/release/pixi.min.js"></script>
-  </head>
-  <body>
-    <script>
-      // Create the application helper and add its render target to the page
-      let app = new PIXI.Application({ width: 640, height: 360 });
-      document.body.appendChild(app.view);
+    <head>
+        <link rel="stylesheet" type="text/css" href="normalize.css">
+        <style>
+            body {
+                overflow: hidden;
+            }
+        </style>
+        <script src="https://pixijs.download/release/pixi.min.js"></script>
+    </head>
+    <body>
+        <script>
+            const app = new PIXI.Application({
+                resizeTo: window,
+                antialias: true,
+            })
+            document.body.appendChild(app.view);
 
-      // Create the sprite and add it to the stage
-      let sprite = PIXI.Sprite.from('sample.png');
-      app.stage.addChild(sprite);
+            const tl = circle()
+            const tr = circle()
+            const br = circle()
+            const bl = circle()
 
-      // Add a ticker callback to move the sprite back and forth
-      let elapsed = 0.0;
-      app.ticker.add((delta) => {
-        elapsed += delta;
-        sprite.x = 100.0 + Math.cos(elapsed/50.0) * 100.0;
-      });
-    </script>
-  </body>
+            app.stage.addChild(tl)
+            app.stage.addChild(tr)
+            app.stage.addChild(br)
+            app.stage.addChild(bl)
+
+            let elapsed = 0.0
+            app.ticker.add((delta) => {
+                elapsed += delta
+
+                l = 0
+                t = 0
+                r = app.screen.width
+                b = app.screen.height
+
+                tl.x = l + 30 + cos(elapsed)
+                tl.y = t + 30
+                tr.x = r - 30
+                tr.y = t + 30 + cos(elapsed)
+                br.x = r - 30 - cos(elapsed)
+                br.y = b - 30
+                bl.x = l + 30
+                bl.y = b - 30 - cos(elapsed)
+            });
+
+            console.log('width', app.screen.width, 'height', app.screen.height)
+
+            function cos(elapsed) {
+                return 30 + Math.cos(elapsed/20) * 30
+            }
+
+            function circle() {
+                const c = new PIXI.Graphics()
+                c.beginFill(0xffffff)
+                c.drawCircle(0, 0, 30)
+                c.endFill()
+                return c
+            }
+        </script>
+    </body>
 </html>
