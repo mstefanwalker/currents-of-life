@@ -17,8 +17,9 @@
             const app = new PIXI.Application({
                 resizeTo: window,
                 antialias: true,
+                hello: true,
             })
-            document.body.appendChild(app.view);
+            document.body.appendChild(app.view)
 
             const tl = circle()
             const tr = circle()
@@ -47,9 +48,7 @@
                 br.y = b - 30
                 bl.x = l + 30
                 bl.y = b - 30 - cos(elapsed)
-            });
-
-            console.log('width', app.screen.width, 'height', app.screen.height)
+            })
 
             function cos(elapsed) {
                 return 30 + Math.cos(elapsed/20) * 30
