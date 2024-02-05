@@ -27,10 +27,10 @@
             app.renderer.background.color = 0x0f2059
             document.body.appendChild(app.view)
 
-            const tl = circle()
-            const tr = circle()
-            const br = circle()
-            const bl = circle()
+            const tl = fish()
+            const tr = fish()
+            const br = fish()
+            const bl = fish()
 
             app.stage.addChild(tl)
             app.stage.addChild(tr)
@@ -60,10 +60,12 @@
                 return 30 + Math.cos(elapsed/20) * 30
             }
 
-            function circle() {
+            function fish() {
                 const c = new PIXI.Graphics()
                 c.beginFill(fishColor)
-                c.drawCircle(0, 0, 30)
+                c.moveTo(0, 30)
+                c.quadraticCurveTo( 25, 0, 0, -30)
+                c.quadraticCurveTo(-25, 0, 0,  30)
                 c.endFill()
                 return c
             }
