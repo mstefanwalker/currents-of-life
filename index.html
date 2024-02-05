@@ -16,6 +16,9 @@
     </head>
     <body>
         <script>
+            const background = 0x0f2059
+            const fishColor = 0xa60ab
+
             const app = new PIXI.Application({
                 resizeTo: window,
                 antialias: true,
@@ -28,7 +31,7 @@
             const tr = circle()
             const br = circle()
             const bl = circle()
-            
+
             app.stage.addChild(tl)
             app.stage.addChild(tr)
             app.stage.addChild(br)
@@ -59,7 +62,7 @@
 
             function circle() {
                 const c = new PIXI.Graphics()
-                c.beginFill(0xffffff)
+                c.beginFill(fishColor)
                 c.drawCircle(0, 0, 30)
                 c.endFill()
                 return c
