@@ -46,15 +46,11 @@
             app.ticker.add((delta) => {
                 elapsed += delta
                 for (let fish of fishes) {
-                    fish.rotation += cos(elapsed/100) * 0.024
+                    fish.rotation += Math.cos(elapsed/100) * 0.024
                     fish.x += Math.cos(fish.rotation) * delta
                     fish.y += Math.sin(fish.rotation) * delta
                 }
             })
-
-            function cos(elapsed) {
-                return Math.cos(elapsed)
-            }
 
             function createFish() {
                 const fish = new PIXI.Graphics()
