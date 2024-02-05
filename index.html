@@ -18,6 +18,7 @@
         <script>
             const background = 0x0f2059
             const fishColor = 0xa60ab
+            const density = 0.00006  // fish per pixel
 
             const app = new PIXI.Application({
                 resizeTo: window,
@@ -30,8 +31,9 @@
             document.body.appendChild(app.view)
 
             const fishes = []
+            const numFishes = Math.floor(width * height * density)
 
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < numFishes; i++) {
                 const fish = createFish()
                 fish.x = Math.random() * width
                 fish.y = Math.random() * height
