@@ -21,13 +21,14 @@
                 antialias: true,
                 hello: true,
             })
+            app.renderer.background.color = 0x0f2059
             document.body.appendChild(app.view)
 
             const tl = circle()
             const tr = circle()
             const br = circle()
             const bl = circle()
-
+            
             app.stage.addChild(tl)
             app.stage.addChild(tr)
             app.stage.addChild(br)
