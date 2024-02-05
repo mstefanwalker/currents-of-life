@@ -32,12 +32,10 @@
             const fishes = []
 
             for (let i = 0; i < 50; i++) {
-                const position = {
-                    x: Math.random() * width,
-                    y: Math.random() * height,
-                    a: Math.random() * 360,
-                }
-                const fish = createFish(position)
+                const fish = createFish()
+                fish.x = Math.random() * width
+                fish.y = Math.random() * height
+                fish.rotation = Math.random() * 2 * Math.PI
                 fishes.push(fish)
                 app.stage.addChild(fish)
             }
@@ -46,24 +44,23 @@
             app.ticker.add((delta) => {
                 elapsed += delta
                 for (let fish of fishes) {
-                    fish.angle += cos(elapsed)
+                    fish.rotation += cos(elapsed/100) * 0.024
+                    fish.x += Math.cos(fish.rotation) * delta
+                    fish.y += Math.sin(fish.rotation) * delta
                 }
             })
 
             function cos(elapsed) {
-                return Math.cos(elapsed/30)
+                return Math.cos(elapsed)
             }
 
-            function createFish(position) {
+            function createFish() {
                 const fish = new PIXI.Graphics()
                 fish.beginFill(fishColor)
-                fish.moveTo(0, 30)
-                fish.quadraticCurveTo( 25, 0, 0, -30)
-                fish.quadraticCurveTo(-25, 0, 0,  30)
+                fish.moveTo(30, 0)
+                fish.quadraticCurveTo(0, -25, -30, 0)
+                fish.quadraticCurveTo(0,  25,  30, 0)
                 fish.endFill()
-                fish.x = position.x
-                fish.y = position.y
-                fish.angle = position.a
                 return fish
             }
         </script>
