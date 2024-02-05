@@ -24,50 +24,47 @@
                 antialias: true,
                 hello: true,
             })
+            const width = app.screen.width
+            const height = app.screen.height
             app.renderer.background.color = 0x0f2059
             document.body.appendChild(app.view)
 
-            const tl = fish()
-            const tr = fish()
-            const br = fish()
-            const bl = fish()
+            const fishes = []
 
-            app.stage.addChild(tl)
-            app.stage.addChild(tr)
-            app.stage.addChild(br)
-            app.stage.addChild(bl)
+            for (let i = 0; i < 50; i++) {
+                const position = {
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    a: Math.random() * 360,
+                }
+                const fish = createFish(position)
+                fishes.push(fish)
+                app.stage.addChild(fish)
+            }
 
             let elapsed = 0.0
             app.ticker.add((delta) => {
                 elapsed += delta
-
-                l = 0
-                t = 0
-                r = app.screen.width
-                b = app.screen.height
-
-                tl.x = l + 30 + cos(elapsed)
-                tl.y = t + 30
-                tr.x = r - 30
-                tr.y = t + 30 + cos(elapsed)
-                br.x = r - 30 - cos(elapsed)
-                br.y = b - 30
-                bl.x = l + 30
-                bl.y = b - 30 - cos(elapsed)
+                for (let fish of fishes) {
+                    fish.angle += cos(elapsed)
+                }
             })
 
             function cos(elapsed) {
-                return 30 + Math.cos(elapsed/20) * 30
+                return Math.cos(elapsed/30)
             }
 
-            function fish() {
-                const c = new PIXI.Graphics()
-                c.beginFill(fishColor)
-                c.moveTo(0, 30)
-                c.quadraticCurveTo( 25, 0, 0, -30)
-                c.quadraticCurveTo(-25, 0, 0,  30)
-                c.endFill()
-                return c
+            function createFish(position) {
+                const fish = new PIXI.Graphics()
+                fish.beginFill(fishColor)
+                fish.moveTo(0, 30)
+                fish.quadraticCurveTo( 25, 0, 0, -30)
+                fish.quadraticCurveTo(-25, 0, 0,  30)
+                fish.endFill()
+                fish.x = position.x
+                fish.y = position.y
+                fish.angle = position.a
+                return fish
             }
         </script>
     </body>
